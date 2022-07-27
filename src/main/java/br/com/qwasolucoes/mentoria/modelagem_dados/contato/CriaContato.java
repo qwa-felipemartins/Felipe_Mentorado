@@ -1,16 +1,19 @@
-package br.com.qwasolucoes.mentoria.modelagem_dados;
+package br.com.qwasolucoes.mentoria.modelagem_dados.contato;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.qwasolucoes.mentoria.modelagem_dados.CriacaoDeObjetosCSV;
 
 public class CriaContato extends CriacaoDeObjetosCSV {
 	public CriaContato() {
 		super.urlPath = "src/main/resources/br/com/qwasolucoes/mentoria/modelagem_dados/Contato.csv";
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<T> criaObjetos() throws IOException {
 
@@ -28,5 +31,3 @@ public class CriaContato extends CriacaoDeObjetosCSV {
 	}
 
 }
-
-

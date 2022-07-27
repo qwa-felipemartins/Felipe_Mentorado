@@ -1,10 +1,14 @@
-package br.com.qwasolucoes.mentoria.modelagem_dados;
+package br.com.qwasolucoes.mentoria.modelagem_dados.pessoa;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.qwasolucoes.mentoria.modelagem_dados.contato.Contato;
+import br.com.qwasolucoes.mentoria.modelagem_dados.contato.CriaContato;
+import br.com.qwasolucoes.mentoria.modelagem_dados.endereco.CriaEndereco;
 
 public class PessoaContato {
 
@@ -58,6 +62,3 @@ public class PessoaContato {
 	}
 
 }
-
-
-

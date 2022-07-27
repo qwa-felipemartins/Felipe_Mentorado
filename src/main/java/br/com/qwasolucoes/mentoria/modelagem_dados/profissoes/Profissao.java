@@ -1,4 +1,4 @@
-package br.com.qwasolucoes.mentoria.modelagem_dados;
+package br.com.qwasolucoes.mentoria.modelagem_dados.profissoes;
 
 import java.math.BigDecimal;
 

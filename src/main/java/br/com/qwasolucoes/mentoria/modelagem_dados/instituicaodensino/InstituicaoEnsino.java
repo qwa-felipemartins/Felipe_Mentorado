@@ -1,9 +1,10 @@
-package br.com.qwasolucoes.mentoria.modelagem_dados;
+package br.com.qwasolucoes.mentoria.modelagem_dados.instituicaodensino;
+
+import java.util.List;
+
+import br.com.qwasolucoes.mentoria.modelagem_dados.formacao.Formacao;
 
 public class InstituicaoEnsino {
-
-	
-	
 	private Integer codigo;
 	private String nome;
 	private String area;
@@ -24,4 +25,5 @@ public class InstituicaoEnsino {
 	}
 
 	
+
 }

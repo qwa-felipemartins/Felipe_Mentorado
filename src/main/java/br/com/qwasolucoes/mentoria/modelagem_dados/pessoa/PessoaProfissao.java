@@ -1,10 +1,14 @@
-package br.com.qwasolucoes.mentoria.modelagem_dados;
+package br.com.qwasolucoes.mentoria.modelagem_dados.pessoa;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+
+import br.com.qwasolucoes.mentoria.modelagem_dados.profissoes.CriaProfissao;
+import br.com.qwasolucoes.mentoria.modelagem_dados.profissoes.Profissao;
 
 public class PessoaProfissao {
 	private Pessoa pessoa;
@@ -54,4 +58,3 @@ public class PessoaProfissao {
 	}
 
 }
-

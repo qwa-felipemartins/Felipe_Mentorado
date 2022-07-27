@@ -5,15 +5,18 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import br.com.qwasolucoes.mentoria.interfaces.relacionamento.Relacionamentos;
-import br.com.qwasolucoes.mentoria.modelagem_dados.Contato;
-import br.com.qwasolucoes.mentoria.modelagem_dados.CriaPessoa;
-import br.com.qwasolucoes.mentoria.modelagem_dados.Pessoa;
-import br.com.qwasolucoes.mentoria.modelagem_dados.PessoaContato;
-import br.com.qwasolucoes.mentoria.modelagem_dados.PessoaEndereco;
-import br.com.qwasolucoes.mentoria.modelagem_dados.PessoaProfissao;
+import br.com.qwasolucoes.mentoria.modelagem_dados.contato.Contato;
+import br.com.qwasolucoes.mentoria.modelagem_dados.contato.CriaContato;
+import br.com.qwasolucoes.mentoria.modelagem_dados.pessoa.CriaPessoa;
+import br.com.qwasolucoes.mentoria.modelagem_dados.pessoa.Pessoa;
+import br.com.qwasolucoes.mentoria.modelagem_dados.pessoa.PessoaContato;
+import br.com.qwasolucoes.mentoria.modelagem_dados.pessoa.PessoaEndereco;
+import br.com.qwasolucoes.mentoria.modelagem_dados.pessoa.PessoaFormacao;
+import br.com.qwasolucoes.mentoria.modelagem_dados.pessoa.PessoaProfissao;
 
 public class RelacionamentoBusca implements Relacionamentos {
 
@@ -277,58 +280,229 @@ public class RelacionamentoBusca implements Relacionamentos {
 
 	@Override
 	public List<Pessoa> buscarPessoasPorEscolaridadeConcluida() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pessoa> pessoaPorEscolaridadeConcluida = new ArrayList<>();
+		try {
+			List<PessoaFormacao> pessoaForm = new PessoaFormacao().pessoaFormacao();
+			for (PessoaFormacao ps : pessoaForm) {
+				if (ps.getFormacao().getConcluido().equalsIgnoreCase("sim"))
+					;
+				pessoaPorEscolaridadeConcluida.add(ps.getPessoa());
+
+			}
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+		return pessoaPorEscolaridadeConcluida;
 	}
 
 	@Override
 	public List<Pessoa> buscarPessoasPorEscolaridadeAreaAtuacao(String areaAtuacao) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pessoa> pessoaPorEscolaridadeAreaAtuacao = new ArrayList<>();
+		try {
+			List<PessoaFormacao> pessoaForm = new PessoaFormacao().pessoaFormacao();
+			List<PessoaProfissao> pessoaProf = new PessoaProfissao().pessoaProfissao();
+			for (int i = 0; i < pessoaProf.size(); i++) {
+				for (int j = 0; j < pessoaForm.size(); j++) {
+					Integer codeForm = pessoaProf.get(i).getProfissao().getCodProfissao();
+					Integer codeEsc = pessoaForm.get(j).getFormacao().getCodigo();
+					if (codeForm.equals(codeEsc)
+							&& pessoaProf.get(i).getProfissao().getAreaAtuacao().equalsIgnoreCase(areaAtuacao)) {
+						pessoaPorEscolaridadeAreaAtuacao.add(pessoaProf.get(i).getPessoa());
+					}
+				}
+
+			}
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+		return pessoaPorEscolaridadeAreaAtuacao;
 	}
 
 	@Override
 	public List<Pessoa> buscarPessoasPorEscolaridadeAnoTermino(Integer ano) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pessoa> pessoaPorEscolaridadeAnoTermino = new ArrayList<>();
+		try {
+			List<PessoaFormacao> pessoaForm = new PessoaFormacao().pessoaFormacao();
+			for (PessoaFormacao ps : pessoaForm) {
+
+				if (ps.getFormacao().getDataTermino() != null) {
+					Integer year = ps.getFormacao().getDataTermino().getYear();
+					if (year.equals(ano)) {
+						pessoaPorEscolaridadeAnoTermino.add(ps.getPessoa());
+					}
+				}
+
+			}
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+		return pessoaPorEscolaridadeAnoTermino;
 	}
 
 	@Override
 	public List<Pessoa> buscarPessoasPorEscolaridadeQuantidadeSemestre(Integer semestre) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pessoa> pessoaPorEscolaridadeAnoTerminoQtdSemestre = new ArrayList<>();
+		try {
+			List<PessoaFormacao> pessoaForm = new PessoaFormacao().pessoaFormacao();
+			for (PessoaFormacao ps : pessoaForm) {
+
+				if (ps.getFormacao().getDataTermino() != null) {
+					Integer semestreAtual = ps.getFormacao().getSemestreAtual();
+					if (semestreAtual.equals(semestre)) {
+						pessoaPorEscolaridadeAnoTerminoQtdSemestre.add(ps.getPessoa());
+					}
+				}
+
+			}
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+		return pessoaPorEscolaridadeAnoTerminoQtdSemestre;
 	}
 
 	@Override
 	public List<Pessoa> buscarPessoasPorProfissaoAreaAtuacaoEscolaridadeConcluido(String areaAtuacao) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pessoa> pessoaPorEscolaridadeAreaAtuacaoConcluido = new ArrayList<>();
+		try {
+			List<PessoaFormacao> pessoaForm = new PessoaFormacao().pessoaFormacao();
+			List<PessoaProfissao> pessoaProf = new PessoaProfissao().pessoaProfissao();
+			for (int i = 0; i < pessoaProf.size(); i++) {
+				for (int j = 0; j < pessoaForm.size(); j++) {
+					Integer codeForm = pessoaProf.get(i).getProfissao().getCodProfissao();
+					Integer codeEsc = pessoaForm.get(j).getFormacao().getCodigo();
+					if (codeForm.equals(codeEsc)
+							&& pessoaForm.get(i).getFormacao().getConcluido().equalsIgnoreCase(areaAtuacao)
+							&& pessoaForm.get(i).getFormacao().getConcluido().equalsIgnoreCase("sim")) {
+						pessoaPorEscolaridadeAreaAtuacaoConcluido.add(pessoaProf.get(i).getPessoa());
+					}
+				}
+
+			}
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+		return pessoaPorEscolaridadeAreaAtuacaoConcluido;
 	}
 
 	@Override
 	public List<Pessoa> buscarPessoasPorProfissaoAreaAtuacaoEscolaridadePorSemestre(String areaAtuacao,
 			Integer semestre) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pessoa> pessoasPorProfissaoAreaAtuacaoEscolaridadePorSemestre = new ArrayList<>();
+		try {
+			List<PessoaFormacao> pessoaForm = new PessoaFormacao().pessoaFormacao();
+			List<PessoaProfissao> pessoaProf = new PessoaProfissao().pessoaProfissao();
+			for (int i = 0; i < pessoaProf.size(); i++) {
+				for (int j = 0; j < pessoaForm.size(); j++) {
+					Integer codeForm = pessoaProf.get(i).getProfissao().getCodProfissao();
+					Integer codeEsc = pessoaForm.get(j).getFormacao().getCodigo();
+					if (codeForm.equals(codeEsc)
+							&& pessoaProf.get(i).getProfissao().getAreaAtuacao().equalsIgnoreCase(areaAtuacao)
+							&& pessoaForm.get(i).getFormacao().getSemestreAtual().equals(semestre)) {
+						pessoasPorProfissaoAreaAtuacaoEscolaridadePorSemestre.add(pessoaProf.get(i).getPessoa());
+					}
+				}
+
+			}
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+		return pessoasPorProfissaoAreaAtuacaoEscolaridadePorSemestre;
 	}
 
 	@Override
 	public List<Pessoa> buscarPessoasPorEstadoCivilProfissaoAreaAtuacaoEscolaridadePorAreaAtuacao(String estadoCivil,
 			String areaAtuacaoProfissao, String areaAtuacaoEscolaridade) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Pessoa> pessoasPorEstadoCivilProfissaoAreaAtuacaoEscolaridadePorAreaAtuacao = new ArrayList<>();
+		try {
+			List<PessoaFormacao> pessoaForm = new PessoaFormacao().pessoaFormacao();
+			List<PessoaProfissao> pessoaProf = new PessoaProfissao().pessoaProfissao();
+			for (int i = 0; i < pessoaProf.size(); i++) {
+				for (int j = 0; j < pessoaForm.size(); j++) {
+					Integer codeForm = pessoaProf.get(i).getProfissao().getCodProfissao();
+					Integer codeEsc = pessoaForm.get(j).getFormacao().getCodigo();
+					if (codeForm.equals(codeEsc)
+							&& pessoaProf.get(i).getProfissao().getAreaAtuacao().equalsIgnoreCase(areaAtuacaoProfissao)
+							&& pessoaForm.get(j).getFormacao().getConcluido().equalsIgnoreCase(areaAtuacaoEscolaridade)
+							&& pessoaForm.get(i).getPessoa().getEstadoCivil().equalsIgnoreCase(estadoCivil)) {
+						pessoasPorEstadoCivilProfissaoAreaAtuacaoEscolaridadePorAreaAtuacao
+								.add(pessoaProf.get(i).getPessoa());
+						break;
+					}
+				}
+
+			}
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+		return pessoasPorEstadoCivilProfissaoAreaAtuacaoEscolaridadePorAreaAtuacao;
+
 	}
 
 	@Override
 	public List<Contato> buscarEnderecoDasPessoasMaioresIdadeEEstadoCivil(String estadoCivil) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Contato> contatoPessoaMaiorDeIdadeEstadoCivil = new ArrayList<>();
+		try {
+			List<PessoaContato> pessoaContato = new PessoaContato().pessoaContato();
+			List<PessoaEndereco> pessoaEndereco = new PessoaEndereco().pessoaEndereco();
+			for (int i = 0; i < pessoaContato.size(); i++) {
+				Integer idade = (LocalDate.now().getYear()
+						- pessoaContato.get(i).getPessoa().getDataNascimento().getYear());
+				Boolean contatoCpfValida = pessoaContato.get(i).getPessoa().getCpf()
+						.equals(pessoaContato.get(i).getContato().getCpf());
+				Boolean estadoCivilCasadoOuSolteiro = pessoaContato.get(i).getPessoa().getEstadoCivil()
+						.equalsIgnoreCase(estadoCivil);
+				if (contatoCpfValida && idade >= 18 && estadoCivilCasadoOuSolteiro) {
+					for (int j = 0; j < pessoaEndereco.size(); j++) {
+						if (pessoaContato.get(i).getPessoa().getCpf()
+								.equals(pessoaEndereco.get(j).getEndereco().getCpf())) {
+							;
+							contatoPessoaMaiorDeIdadeEstadoCivil.add(pessoaContato.get(i).getContato());
+							break;
+						}
+					}
+				}
+			}
+
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+		return contatoPessoaMaiorDeIdadeEstadoCivil;
+
 	}
 
 	@Override
 	public List<Contato> buscarEnderecoPorTipoEndereco(String tipoEndereco) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Contato> contatoEndereco = new ArrayList<>();
+		try {
+			List<PessoaContato> pessoaContato = new PessoaContato().pessoaContato();
+			List<PessoaEndereco> pessoaEndereco = new PessoaEndereco().pessoaEndereco();
+			for (int i = 0; i < pessoaEndereco.size(); i++) {
+
+				for (int j = 0; j < pessoaContato.size(); j++) {
+					if (pessoaContato.get(i).getPessoa().getCpf().equals(pessoaEndereco.get(j).getEndereco().getCpf())
+							&& pessoaEndereco.get(j).getEndereco().getTipo().getTipo().equalsIgnoreCase(tipoEndereco)) {
+						;
+						contatoEndereco.add(pessoaContato.get(i).getContato());
+						break;
+					}
+				}
+			}
+
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+		return contatoEndereco;
+
 	}
 
 	@Override
@@ -340,52 +514,179 @@ public class RelacionamentoBusca implements Relacionamentos {
 
 	@Override
 	public List<String> buscarNomeDoConjungeDasPessoasMaioresIdadeEEstadoCivil(String estadoCivil) {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> pessoasMaioresEstadoCilvolConjuge = new ArrayList<>();
+		try {
+			List<Pessoa> pessoas = new CriaPessoa().criaObjetos();
+			for (Pessoa maioresDeIdade : pessoas) {
+
+				if (LocalDate.now().getYear() - maioresDeIdade.getDataNascimento().getYear() >= 18
+						&& maioresDeIdade.getEstadoCivil().equalsIgnoreCase("sim"))
+					pessoasMaioresEstadoCilvolConjuge.add(maioresDeIdade.getConjuge());
+				break;
+			}
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+
+		return pessoasMaioresEstadoCilvolConjuge;
 	}
 
 	@Override
 	public List<String> buscarNomeDoConjungeDasPessoasPorEstadoCivil(List<String> estadoCivil) {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> pessoasMaioresEstadoCilvolConjuge = new ArrayList<>();
+		try {
+			List<Pessoa> pessoas = new CriaPessoa().criaObjetos();
+			for (int i = 0; i < pessoas.size(); i++) {
+				for (int j = 0; j < estadoCivil.size(); j++) {
+					if (pessoas.get(i).getEstadoCivil().equalsIgnoreCase(estadoCivil.get(j))) {
+
+						pessoasMaioresEstadoCilvolConjuge.add(pessoas.get(i).getConjuge());
+						break;
+					}
+				}
+
+			}
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+
+		return pessoasMaioresEstadoCilvolConjuge;
 	}
 
 	@Override
 	public List<String> buscarNomeDoConjungeMaioresDeIdadeDasPessoasPorEstadoCivil(String estadoCivil) {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> pessoasMaioresEstadoCilvolConjuge = new ArrayList<>();
+		try {
+			List<Pessoa> pessoas = new CriaPessoa().criaObjetos();
+			for (int i = 0; i < pessoas.size(); i++) {
+
+				if (pessoas.get(i).getEstadoCivil().equalsIgnoreCase(estadoCivil)) {
+					if ((LocalDate.now().getYear() - pessoas.get(i).getDataNascimento().getYear() >= 18
+							&& pessoas.get(i).getEstadoCivil().equalsIgnoreCase(estadoCivil)))
+						pessoasMaioresEstadoCilvolConjuge.add(pessoas.get(i).getConjuge());
+					break;
+
+				}
+
+			}
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+
+		return pessoasMaioresEstadoCilvolConjuge;
 	}
 
 	@Override
 	public List<Contato> buscarContatoPorProfissaoAreaAtuacao(String areaAtuacao) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Contato> contatoPorProfissaoAreaAtuacao = new ArrayList<>();
+		try {
+			List<PessoaContato> pessoaContato = new PessoaContato().pessoaContato();
+			List<PessoaProfissao> pessoaProfissao = new PessoaProfissao().pessoaProfissao();
+			for (int i = 0; i < pessoaProfissao.size(); i++) {
+				for (int j = 0; j < pessoaContato.size(); j++) {
+					if (pessoaProfissao.get(i).getPessoa().getCpf()
+							.equalsIgnoreCase(pessoaContato.get(j).getContato().getCpf())
+							&& pessoaProfissao.get(i).getProfissao().getAreaAtuacao().equalsIgnoreCase(areaAtuacao)) {
+						contatoPorProfissaoAreaAtuacao.add(pessoaContato.get(j).getContato());
+					}
+				}
+
+			}
+
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+		return contatoPorProfissaoAreaAtuacao;
+
 	}
 
 	@Override
 	public List<Contato> buscarContatoPorProfissaoAreaAtuacaoEnderecoPorEstadoEBairro(String areaAtuacao, String estado,
 			String bairro) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Contato> contatoPorProfissaoAreaAtuacao = new ArrayList<>();
+		try {
+			List<PessoaContato> pessoaContato = new PessoaContato().pessoaContato();
+			List<PessoaProfissao> pessoaProfissao = new PessoaProfissao().pessoaProfissao();
+			List<PessoaEndereco> pessoaEndereco = new PessoaEndereco().pessoaEndereco();
+			for (int i = 0; i < pessoaProfissao.size(); i++) {
+				for (int j = 0; j < pessoaContato.size(); j++) {
+					if (pessoaProfissao.get(i).getPessoa().getCpf()
+							.equalsIgnoreCase(pessoaContato.get(j).getContato().getCpf())
+							&& pessoaProfissao.get(i).getProfissao().getAreaAtuacao().equalsIgnoreCase(areaAtuacao)) {
+						for (int k = 0; k < pessoaEndereco.size(); k++) {
+							if (pessoaEndereco.get(k).getEndereco().getCpf()
+									.equals(pessoaProfissao.get(i).getPessoa().getCpf())
+									&& pessoaEndereco.get(k).getEndereco().getBairro().equalsIgnoreCase(bairro)
+									&& pessoaEndereco.get(k).getEndereco().getEstado().equalsIgnoreCase(estado)) {
+
+								contatoPorProfissaoAreaAtuacao.add(pessoaContato.get(i).getContato());
+							}
+						}
+					}
+				}
+
+			}
+
+		} catch (IOException | ParseException e) {
+
+			e.printStackTrace();
+		}
+		return contatoPorProfissaoAreaAtuacao;
+
 	}
 
 	@Override
 	public List<Contato> buscarContatoPorProfissaoAreaAtuacaoEnderecoPorEstadosEBairro(String areaAtuacao,
 			List<String> estados, String bairro) {
-		// TODO Auto-generated method stub
+		List<Contato> contatoPorProfissaoAreaAtuacao = new ArrayList<>();
 		return null;
 	}
 
 	@Override
 	public List<Contato> buscarContatoPorTipoContato(String tipoContato) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Contato> contatoPorTipo = new ArrayList<>();
+		try {
+			List<Contato> pessoaContato = new CriaContato().criaObjetos();
+			for (Contato cont : pessoaContato) {
+				if (cont.getTipo().getTipo().equalsIgnoreCase(tipoContato)) {
+					contatoPorTipo.add(cont);
+				}
+
+			}
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		return contatoPorTipo;
+
 	}
 
 	@Override
 	public List<Contato> buscarContatoPorTiposContato(List<String> tipoContato) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Contato> contatoPorTipo = new ArrayList<>();
+		try {
+			List<Contato> pessoaContato = new CriaContato().criaObjetos();
+			for (int i = 0; i < pessoaContato.size(); i++) {
+				for (int j = 0; j < tipoContato.size(); j++) {
+					if (pessoaContato.get(i).getTipo().getTipo().equalsIgnoreCase(tipoContato.get(j))) {
+
+						pessoaContato.add(pessoaContato.get(i));
+
+					}
+				}
+			}
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		return contatoPorTipo;
+
 	}
 
 	@Override

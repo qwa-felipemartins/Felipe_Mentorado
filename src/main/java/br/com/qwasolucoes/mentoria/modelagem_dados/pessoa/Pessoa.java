@@ -1,8 +1,15 @@
-package br.com.qwasolucoes.mentoria.modelagem_dados;
+package br.com.qwasolucoes.mentoria.modelagem_dados.pessoa;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
+
+import br.com.qwasolucoes.mentoria.modelagem_dados.contato.Contato;
+import br.com.qwasolucoes.mentoria.modelagem_dados.empresa.Empresa;
+import br.com.qwasolucoes.mentoria.modelagem_dados.formacao.Formacao;
 
 public class Pessoa {
 	private String nome;
@@ -24,7 +31,7 @@ public class Pessoa {
 		this.sexo = sexo;
 		this.cpf = cpf;
 		this.estadoCivil = estadoCivil;
-		
+		this.conjuge = conjuge;
 	}
 
 	public void setConjuge(String conjuge) {
@@ -95,5 +102,4 @@ public class Pessoa {
 		return conjuge;
 	}
 
-	
 }

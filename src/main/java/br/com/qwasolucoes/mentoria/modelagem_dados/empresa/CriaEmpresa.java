@@ -1,17 +1,17 @@
-package br.com.qwasolucoes.mentoria.modelagem_dados;
+package br.com.qwasolucoes.mentoria.modelagem_dados.empresa;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import br.com.qwasolucoes.mentoria.modelagem_dados.CriacaoDeObjetosCSV;
 
 public class CriaEmpresa extends CriacaoDeObjetosCSV {
 	public CriaEmpresa() {
 		super.urlPath = "src/main/resources/br/com/qwasolucoes/mentoria/modelagem_dados/Empresa.csv";
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<T> criaObjetos() throws FileNotFoundException, IOException {
 		List<Empresa> empresas = new ArrayList<>();

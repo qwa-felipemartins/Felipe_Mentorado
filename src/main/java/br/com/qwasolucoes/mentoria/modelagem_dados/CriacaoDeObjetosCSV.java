@@ -16,8 +16,8 @@ import java.text.ParseException;
 import java.util.List;
 
 public abstract class CriacaoDeObjetosCSV {
-
 	protected String urlPath;
+	
 
 	public CriacaoDeObjetosCSV() {
 
@@ -38,6 +38,8 @@ public abstract class CriacaoDeObjetosCSV {
 
 	}
 
+	
 	public abstract <T> List<T> criaObjetos() throws FileNotFoundException, IOException, ParseException;
+	
 
 }

@@ -1,4 +1,4 @@
-package br.com.qwasolucoes.mentoria.modelagem_dados;
+package br.com.qwasolucoes.mentoria.modelagem_dados.contato;
 
 public class Contato {
 	private String cpf;
@@ -34,6 +34,5 @@ public class Contato {
 	}
 	
 	
-
 
 }

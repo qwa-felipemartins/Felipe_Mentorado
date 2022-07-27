@@ -1,6 +1,6 @@
-package br.com.qwasolucoes.mentoria.modelagem_dados;
+package br.com.qwasolucoes.mentoria.modelagem_dados.endereco;
 
-public class Endereco {
+public class Contato {
 	private String cpf;
 	private TipoEndereco tipo;
 	private String pais;
@@ -12,9 +12,9 @@ public class Endereco {
 	private String cep;
 	private String complemento;
 
-	public Endereco(String cpf, TipoEndereco tipo, String pais, String rua, String numero, String bairro, String cidade,
+	public Contato(String cpf, TipoEndereco tipo, String pais, String rua, String numero, String bairro, String cidade,
 			String estado, String cep, String complemento) {
-		
+		super();
 		this.cpf = cpf;
 		this.tipo = tipo;
 		this.pais = pais;
